@@ -1,0 +1,6 @@
+---
+# defaults file for liquibase
+liquibase_ver: '3.5.3'
+liquibase_mirror: https://github.com/liquibase/liquibase/releases/download
+
+liquibase_parent_install_dir: /usr/local

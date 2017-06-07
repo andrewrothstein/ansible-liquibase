@@ -1,0 +1,43 @@
+---
+- name: download...
+  become: yes
+  become_user: root
+  get_url:
+    url: '{{liquibase_tgz_url}}'
+    dest: /tmp/{{liquibase_tgz}}
+    mode: 0644
+
+- name: make target install dir
+  become: yes
+  become_user: root
+  file:
+    path: '{{liquibase_install_dir}}'
+    state: directory
+    mode: 0755
+
+- name: unarchive...
+  become: yes
+  become_user: root
+  unarchive:
+    src: /tmp/{{liquibase_tgz}}
+    dest: '{{liquibase_install_dir}}'
+    creates: '{{liquibase_install_sdk_dir}}'
+
+- name: link...
+  become: yes
+  become_user: root
+  file:
+    src: '{{liquibase_install_dir}}'
+    dest: '{{liquibase_install_link_dir}}'
+    state: link
+
+- name: add to default path and set default environment vars...
+  become: yes
+  become_user: root
+  with_items:
+    - f: liquibase.sh
+      d: /etc/profile.d
+  template:
+    src: '{{item.f}}.j2'
+    dest: '{{item.d}}/{{item.f}}'
+    mode: '{{item.m|default("0644")}}'

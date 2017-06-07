@@ -1,0 +1,35 @@
+---
+galaxy_info:
+  author: Andrew Rothstein
+  description: installs liquibase
+  company: PointState Capital
+  license:
+    - MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - jessie
+    - name: Alpine
+      versions:
+        - all
+  galaxy_tags:
+    - development
+
+dependencies:
+  - role: andrewrothstein.unarchive-deps
+    version: v1.0.8
+  - role: andrewrothstein.bash
+    version: v1.0.2
+  - role: andrewrothstein.java-oracle-jre
+    version: v2.0.0
+  
