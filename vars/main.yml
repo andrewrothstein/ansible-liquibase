@@ -6,3 +6,4 @@ liquibase_tgz_url: '{{liquibase_mirror}}/liquibase-parent-{{liquibase_ver}}/{{li
 liquibase_install_dir: '{{liquibase_parent_install_dir}}/liquibase-{{liquibase_ver}}'
 liquibase_install_sdk_dir: '{{liquibase_install_dir}}/sdk'
 liquibase_install_link_dir: '{{liquibase_parent_install_dir}}/liquibase'
+liquibase_checksum: '{{liquibase_checksums[liquibase_ver]}}'

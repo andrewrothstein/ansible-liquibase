@@ -1,27 +1,44 @@
 ---
-- name: download...
+- name: check for installation...
   become: yes
   become_user: root
-  get_url:
-    url: '{{liquibase_tgz_url}}'
-    dest: /tmp/{{liquibase_tgz}}
-    mode: 0644
-
-- name: make target install dir
-  become: yes
-  become_user: root
-  file:
+  stat:
     path: '{{liquibase_install_dir}}'
-    state: directory
-    mode: 0755
+  changed_when: False
+  register: liquibase_binary
+- when: not liquibase_binary.stat.exists
+  block:
+    - name: download...
+      become: yes
+      become_user: root
+      get_url:
+        url: '{{liquibase_tgz_url}}'
+        dest: /tmp/{{liquibase_tgz}}
+        checksum: '{{liquibase_checksum}}'
+        mode: 0644
 
-- name: unarchive...
-  become: yes
-  become_user: root
-  unarchive:
-    src: /tmp/{{liquibase_tgz}}
-    dest: '{{liquibase_install_dir}}'
-    creates: '{{liquibase_install_sdk_dir}}'
+    - name: make target install dir
+      become: yes
+      become_user: root
+      file:
+        path: '{{liquibase_install_dir}}'
+        state: directory
+        mode: 0755
+
+    - name: unarchive...
+      become: yes
+      become_user: root
+      unarchive:
+        src: /tmp/{{liquibase_tgz}}
+        dest: '{{liquibase_install_dir}}'
+        creates: '{{liquibase_install_sdk_dir}}'
+  always:
+    - name: cleanup
+      become: yes
+      become_user: root
+      file:
+        path: /tmp/{{liquibase_tgz}}
+        state: absent
 
 - name: link...
   become: yes
