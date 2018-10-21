@@ -27,7 +27,7 @@ galaxy_info:
 
 dependencies:
   - role: andrewrothstein.unarchive-deps
-    version: v1.0.9
+    version: v1.0.10
   - role: andrewrothstein.bash
     version: v1.1.1
   - role: andrewrothstein.java-oracle-jre
