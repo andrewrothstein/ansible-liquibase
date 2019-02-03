@@ -3,3 +3,6 @@
 .ansible-roles/
 Dockerfile.*
 requirements.yml
+**.swp
+*.gz
+*.zip

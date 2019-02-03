@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   stat:
-    path: '{{liquibase_install_dir}}'
+    path: '{{ liquibase_install_dir }}'
   changed_when: False
   register: liquibase_binary
 - when: not liquibase_binary.stat.exists
@@ -12,16 +12,16 @@
       become: yes
       become_user: root
       get_url:
-        url: '{{liquibase_tgz_url}}'
-        dest: /tmp/{{liquibase_tgz}}
-        checksum: '{{liquibase_checksum}}'
+        url: '{{ liquibase_tgz_url }}'
+        dest: /tmp/{{ liquibase_tgz }}
+        checksum: '{{ liquibase_checksum }}'
         mode: 0644
 
     - name: make target install dir
       become: yes
       become_user: root
       file:
-        path: '{{liquibase_install_dir}}'
+        path: '{{ liquibase_install_dir }}'
         state: directory
         mode: 0755
 
@@ -29,23 +29,23 @@
       become: yes
       become_user: root
       unarchive:
-        src: /tmp/{{liquibase_tgz}}
-        dest: '{{liquibase_install_dir}}'
-        creates: '{{liquibase_install_sdk_dir}}'
+        src: /tmp/{{ liquibase_tgz }}
+        dest: '{{ liquibase_install_dir }}'
+        creates: '{{ liquibase_install_sdk_dir }}'
   always:
     - name: cleanup
       become: yes
       become_user: root
       file:
-        path: /tmp/{{liquibase_tgz}}
+        path: /tmp/{{ liquibase_tgz }}
         state: absent
 
 - name: link...
   become: yes
   become_user: root
   file:
-    src: '{{liquibase_install_dir}}'
-    dest: '{{liquibase_install_link_dir}}'
+    src: '{{ liquibase_install_dir }}'
+    dest: '{{ liquibase_install_link_dir }}'
     state: link
 
 - name: add to default path and set default environment vars...
@@ -55,6 +55,6 @@
     - f: liquibase.sh
       d: /etc/profile.d
   template:
-    src: '{{item.f}}.j2'
-    dest: '{{item.d}}/{{item.f}}'
-    mode: '{{item.m|default("0644")}}'
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '{{ item.m|default("0644") }}'
