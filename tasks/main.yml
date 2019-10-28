@@ -29,6 +29,7 @@
       become: yes
       become_user: root
       unarchive:
+        remote_src: yes
         src: /tmp/{{ liquibase_tgz }}
         dest: '{{ liquibase_install_dir }}'
         creates: '{{ liquibase_install_sdk_dir }}'
