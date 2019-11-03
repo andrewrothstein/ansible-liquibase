@@ -5,7 +5,7 @@ dependencies:
   version: v1.1.4
 - openjdk_app: jre
   role: andrewrothstein.openjdk
-  version: 2.0.4
+  version: v2.0.4
 galaxy_info:
   author: Andrew Rothstein
   company: PointState Capital
