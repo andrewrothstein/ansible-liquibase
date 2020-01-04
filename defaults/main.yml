@@ -1,19 +1,13 @@
 ---
 # defaults file for liquibase
-liquibase_ver: '3.8.0'
+liquibase_ver: '3.8.4'
 liquibase_mirror: https://github.com/liquibase/liquibase/releases/download
 liquibase_checksums:
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.5.3/liquibase-3.5.3-bin.tar.gz
-  '3.5.3': sha256:fb85d27f1ef8aef0539a74eca3b71692292f2e961171701a38ba82cdbcb39711
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.5.5/liquibase-3.5.5-bin.tar.gz
-  '3.5.5': sha256:da0df7f6ea7694fb62b1448c3c734644d8d49795ff9bb7417db18bb1da5ff2c6
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.6.1/liquibase-3.6.1-bin.tar.gz
-  '3.6.1': sha256:0413e379f7d1deb5382f9fc4283ba1b7b085f7abaf6c1a3e45cbf9510accc557
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.6.2/liquibase-3.6.2-bin.tar.gz
-  '3.6.2': sha256:dd6d6c81b7ed6c75ee32d51bb53b3449fe2a695684965e36014ff70ea65c3ea5
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.6.3/liquibase-3.6.3-bin.tar.gz
-  '3.6.3': sha256:ece41287cc8fae585d16222e49df9c49946a470f37cacf55fa40327cdeb6c215
-  # https://github.com/liquibase/liquibase/releases/download/liquibase-parent-3.8.0/liquibase-3.8.0-bin.tar.gz
-  '3.8.0': sha256:d6d940dd924b0acdb2a57203578182e42d72ffdb375526c6f6b70354acc40f76
+  # https://github.com/liquibase/liquibase/releases/download/v3.8.2/liquibase-3.8.2.tar.gz
+  '3.8.2': sha256:89d3f82d07f7dd8244ca4994d8604f6534593b4cb071ad6bca47850e0561e4e0
+  # https://github.com/liquibase/liquibase/releases/download/v3.8.3/liquibase-3.8.3.tar.gz
+  '3.8.3': sha256:18908f97a3e36145d87ffd93c69156385fb292785beaa3dcd2e0f2cad4df2420
+  # https://github.com/liquibase/liquibase/releases/download/v3.8.4/liquibase-3.8.4.tar.gz
+  '3.8.4': sha256:d74cd6962b92e8af7f6efd1e0ea58cbf2d0be7a889a24fc86de2441619b30db1
 
 liquibase_parent_install_dir: /usr/local

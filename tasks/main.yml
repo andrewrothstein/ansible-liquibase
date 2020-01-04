@@ -32,7 +32,7 @@
         remote_src: yes
         src: /tmp/{{ liquibase_tgz }}
         dest: '{{ liquibase_install_dir }}'
-        creates: '{{ liquibase_install_sdk_dir }}'
+        creates: '{{ liquibase_install_dir }}/liquibase'
   always:
     - name: cleanup
       become: yes
