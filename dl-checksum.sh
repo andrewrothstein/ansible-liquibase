@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/usr/bin/env sh
 DIR=~/Downloads
 
 # https://github.com/liquibase/liquibase/releases/download/v3.8.4/liquibase-3.8.4.tar.gz
@@ -17,4 +17,4 @@ dl_ver() {
     printf "  '%s': sha256:%s\n" $ver $(sha256sum $lfile | awk '{print $1}')
 }
 
-dl_ver ${1:-3.8.6}
+dl_ver ${1:-3.8.7}
