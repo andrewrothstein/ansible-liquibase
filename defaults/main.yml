@@ -18,3 +18,5 @@ liquibase_checksums:
   '3.8.7': sha256:8f87be4f33f2be55e47650bd4b0c576e8fa187a2b264279c327f89ee7fbd433f
   # https://github.com/liquibase/liquibase/releases/download/v3.8.8/liquibase-3.8.8.tar.gz
   '3.8.8': sha256:54ca4e5f2bd7362838438965f8eea64719a91705d5370b74b46b4fcfede389de
+  # https://github.com/liquibase/liquibase/releases/download/v3.8.9/liquibase-3.8.9.tar.gz
+  '3.8.9': sha256:b4f5cc5c5fcd266af884b14885c25efa3ea73959a6b3f509ba0f251f90da178f
