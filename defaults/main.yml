@@ -1,6 +1,6 @@
 ---
 # defaults file for liquibase
-liquibase_ver: '3.8.8'
+liquibase_ver: '3.9.0'
 liquibase_mirror: https://github.com/liquibase/liquibase/releases/download
 liquibase_parent_install_dir: /usr/local
 liquibase_checksums:
@@ -20,3 +20,5 @@ liquibase_checksums:
   '3.8.8': sha256:54ca4e5f2bd7362838438965f8eea64719a91705d5370b74b46b4fcfede389de
   # https://github.com/liquibase/liquibase/releases/download/v3.8.9/liquibase-3.8.9.tar.gz
   '3.8.9': sha256:b4f5cc5c5fcd266af884b14885c25efa3ea73959a6b3f509ba0f251f90da178f
+  # https://github.com/liquibase/liquibase/releases/download/v3.9.0/liquibase-3.9.0.tar.gz
+  '3.9.0': sha256:68eda6527ef36b45aff70a755e5660a15d82079a0074b56b7da3c7aede8b5a61
