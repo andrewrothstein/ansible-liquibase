@@ -3,5 +3,7 @@
   roles:
     - role: '{{ playbook_dir }}'
   tasks:
-    - name: test installed executable
-      command: bash -l -c 'liquibase --version'
+    - command: bash -l -c 'liquibase --version'
+      register: liquibase_test_output
+    - debug:
+        msg: '{{ liquibase_test_output.stdout }}'
