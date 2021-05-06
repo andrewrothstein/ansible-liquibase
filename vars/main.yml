@@ -1,6 +1,7 @@
 ---
 # vars file for liquibase
 liquibase_tgz: liquibase-{{ liquibase_ver }}.tar.gz
+liquibase_tmp_tgz: /tmp/{{ liquibase_tgz }}
 liquibase_tgz_url: '{{ liquibase_mirror }}/v{{ liquibase_ver }}/{{ liquibase_tgz }}'
 
 liquibase_install_dir: '{{ liquibase_parent_install_dir }}/liquibase-{{ liquibase_ver }}'

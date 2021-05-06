@@ -1,5 +1,5 @@
 ---
-- name: check for installation...
+- name: check for installation in {{ liquibase_install_dir }}
   become: yes
   become_user: root
   stat:
@@ -8,16 +8,16 @@
   register: liquibase_binary
 - when: not liquibase_binary.stat.exists
   block:
-    - name: download...
+    - name: downloading {{ liquibase_tgz_url }}
       become: yes
       become_user: root
       get_url:
         url: '{{ liquibase_tgz_url }}'
-        dest: /tmp/{{ liquibase_tgz }}
+        dest: '{{ liquibase_tmp_tgz }}'
         checksum: '{{ liquibase_checksum }}'
         mode: 0644
 
-    - name: make target install dir
+    - name: mkdir {{ liquibase_install_dir }}
       become: yes
       become_user: root
       file:
@@ -25,23 +25,23 @@
         state: directory
         mode: 0755
 
-    - name: unarchive...
+    - name: unarchiving {{ liquibase_tmp_tgz }}
       become: yes
       become_user: root
       unarchive:
         remote_src: yes
-        src: /tmp/{{ liquibase_tgz }}
+        src: '{{ liquibase_tmp_tgz }}'
         dest: '{{ liquibase_install_dir }}'
         creates: '{{ liquibase_install_dir }}/liquibase'
   always:
-    - name: cleanup
+    - name: rm {{ liquibase_tmp_tgz }}
       become: yes
       become_user: root
       file:
-        path: /tmp/{{ liquibase_tgz }}
+        path: '{{ liquibase_tmp_tgz }}'
         state: absent
 
-- name: link...
+- name: linking {{ liquibase_install_link_dir }} to {{ liquibase_install_dir }}
   become: yes
   become_user: root
   file:
