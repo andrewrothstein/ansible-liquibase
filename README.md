@@ -1,6 +1,6 @@
 andrewrothstein.liquibase
 =========
-[![Build Status](https://travis-ci.org/andrewrothstein/ansible-liquibase.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-liquibase)
+![Build Status](https://github.com/andrewrothstein/ansible-liquibase/actions/workflows/build.yml/badge.svg)
 
 Installs [Liquibase](http://www.liquibase.org).
 
