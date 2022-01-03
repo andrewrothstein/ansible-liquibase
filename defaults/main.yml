@@ -44,6 +44,8 @@ liquibase_checksums:
   '4.4.3': sha256:b5dfa605ffc9853c39bef96ea72965a59d9ee12a3bcb59040b539d4782d4bff9
   # https://github.com/liquibase/liquibase/releases/download/v4.5.0/liquibase-4.5.0.tar.gz
   '4.5.0': sha256:4ce45bcbe4660b33eee93e80b9be968631e85566d02d90c0c5306fac8d4dd602
+  # https://github.com/liquibase/liquibase/releases/download/v4.6.0/liquibase-4.6.0.tar.gz
+  '4.6.0': sha256:9d139d6a3c156bd74bf9629323c31300f5d233a0777237060c952e4a0a7d3689
   # https://github.com/liquibase/liquibase/releases/download/v4.6.1/liquibase-4.6.1.tar.gz
   '4.6.1': sha256:9d1e33c9ef5c0d545554586d656ab5b9e8c6f8963b0eb3a0e6caea3ad9b90795
   # https://github.com/liquibase/liquibase/releases/download/v4.6.2/liquibase-4.6.2.tar.gz

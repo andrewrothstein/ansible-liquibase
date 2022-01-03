@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 DIR=~/Downloads
 
 # https://github.com/liquibase/liquibase/releases/download/v3.8.4/liquibase-3.8.4.tar.gz
