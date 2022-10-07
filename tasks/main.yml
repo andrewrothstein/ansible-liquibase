@@ -1,6 +1,14 @@
 ---
+- include_role:
+    name: andrewrothstein.unarchive-deps
+- include_role:
+    name: andrewrothstein.bash
+- include_role:
+    name: andrewrothstein.temurin
+  vars:
+    openjdk_app: jre
 - name: check for installation in {{ liquibase_install_dir }}
-  become: yes
+  become: true
   become_user: root
   stat:
     path: '{{ liquibase_install_dir }}'
@@ -9,7 +17,7 @@
 - when: not liquibase_binary.stat.exists
   block:
     - name: downloading {{ liquibase_tgz_url }}
-      become: yes
+      become: true
       become_user: root
       get_url:
         url: '{{ liquibase_tgz_url }}'
@@ -18,7 +26,7 @@
         mode: 0644
 
     - name: mkdir {{ liquibase_install_dir }}
-      become: yes
+      become: true
       become_user: root
       file:
         path: '{{ liquibase_install_dir }}'
@@ -26,23 +34,23 @@
         mode: 0755
 
     - name: unarchiving {{ liquibase_tmp_tgz }}
-      become: yes
+      become: true
       become_user: root
       unarchive:
-        remote_src: yes
+        remote_src: true
         src: '{{ liquibase_tmp_tgz }}'
         dest: '{{ liquibase_install_dir }}'
         creates: '{{ liquibase_install_dir }}/liquibase'
   always:
     - name: rm {{ liquibase_tmp_tgz }}
-      become: yes
+      become: true
       become_user: root
       file:
         path: '{{ liquibase_tmp_tgz }}'
         state: absent
 
 - name: linking {{ liquibase_install_link_dir }} to {{ liquibase_install_dir }}
-  become: yes
+  become: true
   become_user: root
   file:
     src: '{{ liquibase_install_dir }}'
@@ -50,7 +58,7 @@
     state: link
 
 - name: add to default path and set default environment vars...
-  become: yes
+  become: true
   become_user: root
   with_items:
     - f: liquibase.sh

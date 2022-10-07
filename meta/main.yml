@@ -1,9 +1,4 @@
 ---
-dependencies:
-- andrewrothstein.unarchive-deps
-- andrewrothstein.bash
-- name: andrewrothstein.temurin
-  openjdk_app: jre
 galaxy_info:
   author: Andrew Rothstein
   company: PointState Capital
