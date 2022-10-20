@@ -1,6 +1,6 @@
 ---
 # defaults file for liquibase
-liquibase_ver: 4.16.1
+liquibase_ver: 4.17.0
 liquibase_mirror: https://github.com/liquibase/liquibase/releases/download
 liquibase_parent_install_dir: /usr/local
 liquibase_checksums:
@@ -70,3 +70,5 @@ liquibase_checksums:
   '4.15.0': sha256:e805f8b878f84e7d42b39e4fcee1c1a1b467c6481650738f1059cdc98a207c56
   # https://github.com/liquibase/liquibase/releases/download/v4.16.1/liquibase-4.16.1.tar.gz
   '4.16.1': sha256:2da0022c3315d9c59c4cb1c3b50b3bad2f5a944d74973fb9f4b32037e5403019
+  # https://github.com/liquibase/liquibase/releases/download/v4.17.0/liquibase-4.17.0.tar.gz
+  '4.17.0': sha256:290140cbd7399c24ba0ea8e856c769c88a0f9b8e7bb8ed8b4a9c1104d9d505a6
