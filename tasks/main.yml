@@ -12,7 +12,7 @@
   become_user: root
   stat:
     path: '{{ liquibase_install_dir }}'
-  changed_when: False
+  changed_when: false
   register: liquibase_binary
 - when: not liquibase_binary.stat.exists
   block:
