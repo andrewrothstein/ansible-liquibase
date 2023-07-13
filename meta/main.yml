@@ -19,7 +19,7 @@ galaxy_info:
     versions:
     - bookworm
     - bullseye
-    - name: EL
+  - name: EL
     versions:
     - 8
     - 9
