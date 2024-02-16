@@ -1,9 +1,13 @@
 ---
-- hosts: all
+- name: Testing andrewrothstein.liquibase
+  hosts: all
   roles:
     - role: '{{ playbook_dir }}'
   tasks:
-    - command: bash -l -c 'liquibase --version'
+    - name: Executing 'liquibase --version'
+      ansible.builtin.command: bash -l -c 'liquibase --version'
+      changed_when: false
       register: liquibase_test_output
-    - debug:
+    - name: Output of 'liquibase --version'
+      ansible.builtin.debug:
         msg: '{{ liquibase_test_output.stdout }}'
