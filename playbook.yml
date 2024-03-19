@@ -1,8 +1,12 @@
 ---
 - name: Testing andrewrothstein.liquibase
-  hosts: all
-  roles:
-    - role: '{{ playbook_dir }}'
+  hosts: localhost
+  module_defaults:
+    group/aws:
+      aws_access_key: "test"
+      aws_secret_key: "test"
+      region: "us-east-1"
+      endpoint_url: "http://localhost:4566"
   tasks:
     - name: Executing 'liquibase --version'
       ansible.builtin.command: bash -l -c 'liquibase --version'
