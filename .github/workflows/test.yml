@@ -35,7 +35,6 @@ jobs:
         run: |
           JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key)
           echo "PUBLIC_IP=$(awslocal ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> $GITHUB_ENV
-          ssh -i key.pem root@$PUBLIC_IP
 
       - name: Create Inventory File
         run: |
