@@ -31,18 +31,12 @@ jobs:
           awslocal ec2 create-key-pair --key-name ansible-ec2-key --query 'KeyMaterial' --output text > key.pem
           chmod 400 key.pem
 
-      - name: Add rules to the security group
-        run: |
-          SG_YAML=$(awslocal ec2 authorize-security-group-ingress --group-id default --protocol tcp --port 22 --cidr 0.0.0.0/0)
-          echo "SG_ID=$(echo \"$SG_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
-          echo "SG_ID=$SG_ID"
-
       - name: Run ec2 instance
         run: |
-          JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID)
+          JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key)
           echo "PUBLIC_IP=$(echo \"$JSON_DATA\" | jq -r '.Instances[0].PublicIpAddress')" >> $GITHUB_ENV
-          echo "PUBLIC_IP=$PUBLIC_IP"
           localstack logs
+          ssh -i key.pem root@127.0.0.1
 
           
       - name: Deploy Playbook
