@@ -34,11 +34,11 @@ jobs:
       - name: Add rules to the security group
         run: |
           SG_YAML=$(awslocal ec2 authorize-security-group-ingress --group-id default --protocol tcp --port 22 --cidr 0.0.0.0/0)
-          echo "SG_ID=$(echo \"$INPUT_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SG_ID=$(echo \"$SG_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
 
       - name: Run ec2 instance
         run: |
-          awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $env.SG_ID
+          awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID
 
       - name: Deploy Playbook
         run: |
