@@ -34,6 +34,7 @@ jobs:
       - name: Add rules to the security group
         run: |
           SG_YAML=$(awslocal ec2 authorize-security-group-ingress --group-id default --protocol tcp --port 22 --cidr 0.0.0.0/0)
+          localstack logs
           echo "SG_ID=$(echo \"$SG_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
           echo "SG_ID=$SG_ID"
 
