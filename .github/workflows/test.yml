@@ -35,12 +35,14 @@ jobs:
         run: |
           SG_YAML=$(awslocal ec2 authorize-security-group-ingress --group-id default --protocol tcp --port 22 --cidr 0.0.0.0/0)
           echo "SG_ID=$(echo \"$SG_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
+          echo "SG_ID=$SG_ID"
 
       - name: Run ec2 instance
         run: |
-          awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID
-          localstack logs
-
+          JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID)
+          echo "PUBLIC_IP=$(echo \"$JSON_DATA\" | jq -r '.Instances[0].PublicIpAddress')" >> $GITHUB_ENV
+          echo "PUBLIC_IP=$PUBLIC_IP"
+          
       - name: Deploy Playbook
         run: |
           ansible-playbook -i inventory -u ubuntu playbook.yml
