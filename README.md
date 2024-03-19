@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/liquibase/liquibase/actions/workflows/build.yml/badge.svg)
 
-The Liquibase Agent Ansible role installs [Liquibase](http://www.liquibase.org).
+The Liquibase Ansible role installs [Liquibase](http://www.liquibase.org).
 
 ## :link: Requirements
 
