@@ -14,26 +14,6 @@ jobs:
         with:
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Start & Configure LocalStack
-        env:
-          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          pip install localstack awscli-local
-          docker pull localstack/localstack-pro
-          localstack start -d
-          echo "Waiting for LocalStack startup..."
-          localstack wait -t 30
-          echo "Startup complete"
-
-      - name: Create Inventory File
-        run: |
-          echo "[all]" > inventory.ini
-          echo "ansible_host=127.0.0.1" >> inventory.ini
-          echo "ansible_user=root" >> inventory.ini
-          echo "ansible_ssh_private_key_file=key.pem" >> inventory.ini
-          cat inventory.ini
-
       - name: Deploy Playbook
         run: |
-          ansible-playbook -i inventory.ini playbook.yml
+          ansible-playbook --connection=local --inventory 127.0.0.1, playbook.yml

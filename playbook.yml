@@ -2,7 +2,7 @@
 - name: Testing andrewrothstein.liquibase
   hosts: localhost
   roles:
-  - role: .
+  - role: '{{ playbook_dir }}'
   module_defaults:
     group/aws:
       aws_access_key: "test"
