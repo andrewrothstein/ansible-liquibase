@@ -39,6 +39,7 @@ jobs:
       - name: Run ec2 instance
         run: |
           awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID
+          localstack logs
 
       - name: Deploy Playbook
         run: |
