@@ -1,39 +1,34 @@
-andrewrothstein.liquibase
-=========
-![Build Status](https://github.com/andrewrothstein/ansible-liquibase/actions/workflows/build.yml/badge.svg)
+# Liquibase Ansible Role
 
-Installs [Liquibase](http://www.liquibase.org).
+![Build Status](https://github.com/liquibase/liquibase/actions/workflows/build.yml/badge.svg)
 
-Requirements
-------------
+The Liquibase Agent Ansible role installs [Liquibase](http://www.liquibase.org).
 
-See [meta/main.yml](meta/main.yml)
+## Requirements
 
-Role Variables
---------------
+See [meta/requirements.yml](meta/requirements.yml)
 
-See [defaults/main.yml](defaults/main.yml)
+## Role Variables
 
-Dependencies
-------------
+* **liquibase_ver**: This property appears to specify the default version of Liquibase. **Default value** -> `4.26.0`
+* **liquibase_mirror**: This property specifies the default mirror or repository from which Liquibase releases can be downloaded. **Default value** -> `https://github.com/liquibase/liquibase/releases/download`
+* **liquibase_parent_install_dir**: This property indicates the default parent installation directory for Liquibase. **Default value** -> `/usr/local`
+* **liquibase_checksums**: Checksums for different versions of Liquibase along with their respective download URLs. The checksums are SHA-256 hashes calculated for each Liquibase release file, ensuring the integrity of the downloaded files.
 
-See [meta/main.yml](meta/main.yml)
-
-Example Playbook
-----------------
+## Example Playbook (installs latest liquibase release)
 
 ```yml
-- hosts: servers
+- hosts: server
   roles:
-    - andrewrothstein.liquibase
+    - role: liquibase.liquibase
 ```
 
-License
--------
+## Example Playbook (installs liquibase 4.26.0)
 
-MIT
-
-Author Information
-------------------
-
-Andrew Rothstein <andrew.rothstein@gmail.com>
+```yml
+- hosts: server
+  roles:
+    - role: liquibase.liquibase
+      liquibase_ver:
+        - 4.26.0
+```

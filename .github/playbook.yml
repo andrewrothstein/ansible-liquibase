@@ -1,5 +1,5 @@
 ---
-- name: Testing andrewrothstein.liquibase
+- name: Testing liquibase.liquibase
   hosts: localhost
   roles:
   - role: '{{ playbook_dir }}'
