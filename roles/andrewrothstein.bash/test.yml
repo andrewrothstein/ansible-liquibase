@@ -1,5 +1,0 @@
----
-- name: Testing andrewrothstein.bash
-  hosts: all
-  roles:
-    - role: '{{ playbook_dir }}'
