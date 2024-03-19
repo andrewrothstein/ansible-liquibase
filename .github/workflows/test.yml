@@ -34,11 +34,17 @@ jobs:
       - name: Run ec2 instance
         run: |
           JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key)
-          echo "PUBLIC_IP=$(echo \"$JSON_DATA\" | jq -r '.Instances[0].PublicIpAddress')" >> $GITHUB_ENV
-          localstack logs
-          ssh -i key.pem root@127.0.0.1
+          echo "PUBLIC_IP=$(awslocal ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> $GITHUB_ENV
+          ssh -i key.pem root@$PUBLIC_IP
 
-          
+      - name: Create Inventory File
+        run: |
+          echo "[all]" > inventory.ini
+          echo "ansible_host=$PUBLIC_IP" >> inventory.ini
+          echo "ansible_user=root" >> inventory.ini
+          echo "ansible_ssh_private_key_file=key.pem" >> inventory.ini
+          cat inventory.ini
+
       - name: Deploy Playbook
         run: |
-          ansible-playbook -i inventory -u ubuntu playbook.yml
+          ansible-playbook -i inventory.ini playbook.yml
