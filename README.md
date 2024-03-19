@@ -39,7 +39,7 @@ Let's say you would like to have `liquibase` installed in 3 AWS ec2 instances.
 
 1. **Set up your inventory**: Create an inventory file (`inventory.ini`) listing the IP addresses or hostnames of your three EC2 instances.
 
-  ````txt
+  ```txt
   [liquibase_hosts]
   10.0.0.1
   10.0.0.2
