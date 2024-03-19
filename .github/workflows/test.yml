@@ -103,4 +103,4 @@ jobs:
 
       - name: Destroy infrastructure
         run: |
-          spacectl stack destroy --id liquibase-ansible --auto-confirm
+          spacectl stack task --id liquibase-ansible "terraform destroy -auto-approve"

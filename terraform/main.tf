@@ -24,15 +24,15 @@ data "aws_ami" "ubuntu" {
 
 locals {
   instances = {
-    instance1 = {
+    ansible_role_instance_1 = {
       ami           = data.aws_ami.ubuntu.id
       instance_type = "t2.micro"
     }
-    instance2 = {
+    ansible_role_instance_2 = {
       ami           = data.aws_ami.ubuntu.id
       instance_type = "t2.micro"
     }
-    instance3 = {
+    ansible_role_instance_3 = {
       ami           = data.aws_ami.ubuntu.id
       instance_type = "t2.micro"
     }
