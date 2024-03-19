@@ -1,0 +1,29 @@
+---
+- name: Resolve platform specific vars
+  ansible.builtin.include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+      skip: true
+      paths:
+        - '{{ role_path }}/vars'
+
+- name: Install bash OS pkgs
+  become: '{{ bash_privilege_escalation | default(True) }}'
+  become_user: root
+  ansible.builtin.package:
+    name:
+      - bash
+#      - bash-completions
+#      - bc
+    state: present
+
+- name: Ensure the bash completions directory exists
+  become: '{{ bash_privilege_escalation | default(True) }}'
+  become_user: root
+  ansible.builtin.file:
+    path: '{{ bash_completion_d }}'
+    state: directory
+    mode: '755'

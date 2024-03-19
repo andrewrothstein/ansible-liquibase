@@ -1,0 +1,88 @@
+---
+- name: Install andrewrothstein.unarchivedeps
+  ansible.builtin.include_role:
+    name: andrewrothstein.unarchivedeps
+- name: Resolve platform specific vars
+  ansible.builtin.include_vars: '{{ item }}'
+  with_first_found:
+    - files:
+        - '{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml'
+        - '{{ ansible_distribution }}.yml'
+        - '{{ ansible_os_family }}.yml'
+      skip: true
+      paths:
+        - '{{ role_path }}/vars'
+- name: Mkdir {{ temurin_install_dir }}
+  become: true
+  become_user: root
+  ansible.builtin.file:
+    path: '{{ temurin_install_dir }}'
+    state: directory
+    mode: '755'
+- name: Looking for existing installation at {{ temurin_install_subdir }}
+  become: true
+  become_user: root
+  ansible.builtin.stat:
+    path: '{{ temurin_install_subdir }}'
+  changed_when: false
+  register: temurin_binary
+- name: Downloading and installing temurin
+  when: not temurin_binary.stat.exists
+  block:
+    - name: Downloading {{ temurin_archive_url }} to {{ temurin_tmp_archive }}
+      become: true
+      become_user: root
+      ansible.builtin.get_url:
+        url: '{{ temurin_archive_url }}'
+        dest: '{{ temurin_tmp_archive }}'
+        checksum: '{{ temurin_checksum }}'
+        mode: '644'
+        timeout: '{{ temurin_timeout_seconds | default(600) }}'
+    - name: Unarchiving {{ temurin_tmp_archive }} into {{ temurin_install_dir }} creating {{ temurin_install_subdir }}
+      become: true
+      become_user: root
+      ansible.builtin.unarchive:
+        remote_src: true
+        src: '{{ temurin_tmp_archive }}'
+        dest: '{{ temurin_install_dir }}'
+        creates: '{{ temurin_install_subdir }}'
+  always:
+    - name: Rm {{ temurin_tmp_archive }}
+      become: true
+      become_user: root
+      ansible.builtin.file:
+        path: '{{ temurin_tmp_archive }}'
+        state: absent
+- name: Linking {{ temurin_install_link }} to {{ temurin_install_subdir }}
+  become: true
+  become_user: root
+  ansible.builtin.file:
+    src: '{{ temurin_install_subdir }}'
+    dest: '{{ temurin_install_link }}'
+    state: link
+- name: Adding openjdk to default path and easing systemd integration
+  become: true
+  become_user: root
+  with_items:
+    - f: openjdk.sh
+      d: /etc/profile.d
+    - f: openjdk.env
+      d: '{{ temurin_install_subdir }}'
+  ansible.builtin.template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '{{ item.m | default("0644") }}'
+- name: Adding certs to the keystore at {{ temurin_keystore }} with {{ temurin_keytool_exe }}
+  become: true
+  become_user: root
+  loop: '{{ temurin_certs | default([]) }}'
+  changed_when: false
+  ansible.builtin.command: |
+    {{ temurin_keytool_exe }}
+    -import
+    -trustcacerts
+    -keystore {{ temurin_keystore }}
+    -alias {{ item.alias }}
+    -storepass {{ item.storepass | default("changeit") }}
+    -file {{ item.file | default(temurin_cacert_default_prefix + item.alias + ".pem") }}
+    -noprompt

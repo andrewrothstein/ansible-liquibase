@@ -1,0 +1,56 @@
+---
+- name: Testing andrewrothstein.temurin (8)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 8
+      minor: 392
+      b: '08'
+- name: Testing andrewrothstein.temurin (11)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 11
+      minor: 0
+      patch: '21'
+      b: '9'
+- name: Testing andrewrohtstein.temurin (17)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 17
+      minor: 0
+      patch: '9'
+      b: '9'
+- name: Testing andrewrothstein.temurin (18)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 18
+      minor: 0
+      patch: '2.1'
+      b: '1'
+- name: Testing andrewrothstein.temurin (19)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 19
+      minor: 0
+      patch: '2'
+      b: '7'
+- name: Testing andrewrothstein.teurin (20)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 20
+      minor: 0
+      patch: "2"
+      b: "9"
+- name: Testing andrewrothstein.temurin (21)
+  ansible.builtin.import_playbook: test-ver.yml
+  vars:
+    openjdk_ver:
+      major: 21
+      b: "35"
+- name: Testing andrewrothstein.temurin
+  ansible.builtin.import_playbook: test-ver.yml

@@ -1,0 +1,3 @@
+---
+temurin_os_prefix: alpine-
+temurin_cacert_default_prefix: /etc/ssl/certs/ca-cert-

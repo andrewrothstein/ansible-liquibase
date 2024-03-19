@@ -1,0 +1,20 @@
+---
+# defaults file for temurin
+openjdk_app: jre
+openjdk_ver:
+  major: 21
+  minor: 0
+  patch: '1'
+  b: '12'
+
+temurin_arch_map:
+  386: x32
+  aarch64: aarch64
+  arm64: x64
+  ppc64le: ppc64le
+  x86_64: x64
+
+temurin_parent_install_dir: /usr/local
+temurin_mirror: https://github.com/adoptium
+
+# temurin_timeout_seconds: 600
