@@ -28,7 +28,7 @@ jobs:
 
       - name: Create a Key Pair
         run: |
-          awslocal ec2 create-key-pair --key-name ansible-ec2-key --query 'KeyMaterial' --output text | tee key.pem
+          awslocal ec2 create-key-pair --key-name ansible-ec2-key --query 'KeyMaterial' --output text > key.pem
           chmod 400 key.pem
 
       - name: Add rules to the security group
