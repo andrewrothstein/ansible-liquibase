@@ -1,8 +1,8 @@
 ---
 - name: Testing andrewrothstein.liquibase
-  hosts: all
+  hosts: localhost
   roles:
-    - role: '{{ playbook_dir }}'
+  - role: '{{ playbook_dir }}'
   tasks:
     - name: Executing 'liquibase --version'
       ansible.builtin.command: bash -l -c 'liquibase --version'

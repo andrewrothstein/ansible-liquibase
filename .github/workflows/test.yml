@@ -6,101 +6,15 @@ on:
 
 jobs:
   test-ansible-role:
-    runs-on: ubuntu-22.04
-    permissions: write-all
-    env:
-      SPACELIFT_API_KEY_ENDPOINT: ${{ secrets.SPACELIFT_API_KEY_ENDPOINT }}
-      SPACELIFT_API_KEY_ID: ${{ secrets.SPACELIFT_API_KEY_ID }}
-      SPACELIFT_API_KEY_SECRET: ${{ secrets.SPACELIFT_API_KEY_SECRET }}
-    defaults:
-      run:
-        working-directory: terraform
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Install spacectl
-        uses: spacelift-io/setup-spacectl@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_DEV_GITHUB_OIDC_ROLE_ARN_LIQUIBASE_ANSIBLE }}
-          aws-region: us-east-1
-
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt
-
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Preview infrastructure
+      - name: Deploy Playbook
         run: |
-          spacectl stack local-preview --id liquibase-ansible > ${GITHUB_WORKSPACE}/plan.out
-          cat ${GITHUB_WORKSPACE}/plan.out
-
-      - name: Terraform Show Plan in PR
-        uses: actions/github-script@v6
-        continue-on-error: true        
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const run_url = process.env.GITHUB_SERVER_URL + '/' + process.env.GITHUB_REPOSITORY + '/actions/runs/' + process.env.GITHUB_RUN_ID
-            const run_link = '<a href="' + run_url + '">Actions</a>.'
-            const fs = require('fs')
-            const plan_file = fs.readFileSync('plan.out', 'utf8')
-            const plan = plan_file.length > 65000 ? plan_file.toString().substring(0, 65000) + " ..." : plan_file
-            const truncated_message = plan_file.length > 65000 ? "Output is too long and was truncated. You can read full Plan in " + run_link + "<br /><br />" : ""
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-            <details><summary>Validation Output</summary>
-
-            \`\`\`\n
-            ${{ steps.validate.outputs.stdout }}
-            \`\`\`
-
-            </details>
-
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            
-            <details><summary>Show Plan</summary>
-            
-            \`\`\`\n
-            ${plan}
-            \`\`\`
-            
-            </details>
-            ${truncated_message}
-
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ github.workspace }}\`, Workflow: \`${{ github.workflow }}\`*`;
-              
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-
-      - name: Deploy infrastructure
-        run: |
-          spacectl stack set-current-commit --id liquibase-ansible --sha ${{ github.sha }}
-          spacectl stack deploy --id liquibase-ansible --auto-confirm
-
-      - name: Test
-        run: |
-          sleep 10
-
-      - name: Destroy infrastructure
-        run: |
-          spacectl stack destroy --id liquibase-ansible --auto-confirm
+          ansible-galaxy install -r meta/requirements.yml
+          ansible-playbook --connection=local --inventory 127.0.0.1, playbook.yml
