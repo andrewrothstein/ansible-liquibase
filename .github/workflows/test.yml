@@ -34,7 +34,6 @@ jobs:
       - name: Add rules to the security group
         run: |
           SG_YAML=$(awslocal ec2 authorize-security-group-ingress --group-id default --protocol tcp --port 22 --cidr 0.0.0.0/0)
-          localstack logs
           echo "SG_ID=$(echo \"$SG_YAML\" | grep -A 1 "SecurityGroups:" | grep "GroupId:" | awk '{print $2}')" >> $GITHUB_ENV
           echo "SG_ID=$SG_ID"
 
@@ -43,6 +42,8 @@ jobs:
           JSON_DATA=$(awslocal ec2 run-instances --image-id ami-ff0fea8310f3 --count 1 --instance-type t3.nano --key-name ansible-ec2-key --security-group-ids $SG_ID)
           echo "PUBLIC_IP=$(echo \"$JSON_DATA\" | jq -r '.Instances[0].PublicIpAddress')" >> $GITHUB_ENV
           echo "PUBLIC_IP=$PUBLIC_IP"
+          localstack logs
+
           
       - name: Deploy Playbook
         run: |
