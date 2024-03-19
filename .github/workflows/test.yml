@@ -11,11 +11,9 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch }}
 
       - name: Deploy Playbook
         run: |
           ansible-galaxy install -r meta/requirements.yml
-          ansible-playbook --connection=local --inventory 127.0.0.1, ./github/playbook.yml
+          ansible-playbook --connection=local --inventory 127.0.0.1, $PWD/github/playbook.yml
 
