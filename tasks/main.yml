@@ -9,7 +9,7 @@
   ansible.builtin.include_role:
     name: andrewrothstein.temurin
   vars:
-    openjdk_app: jre
+    temurin_app: jre
 - name: Check for installation in {{ liquibase_install_dir }}
   become: true
   become_user: root
