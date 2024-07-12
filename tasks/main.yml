@@ -1,7 +1,4 @@
 ---
-- name: Installing andrewrothstein.unarchivedeps
-  ansible.builtin.include_role:
-    name: andrewrothstein.unarchivedeps
 - name: Installing andrewrothstein.bash
   ansible.builtin.include_role:
     name: andrewrothstein.bash
@@ -36,6 +33,10 @@
         path: '{{ liquibase_install_dir }}'
         state: directory
         mode: '755'
+
+    - name: Installing andrewrothstein.unarchivedeps
+      ansible.builtin.include_role:
+        name: andrewrothstein.unarchivedeps
 
     - name: Unarchiving {{ liquibase_tmp_tgz }}
       become: true
